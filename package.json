@@ -1,0 +1,22 @@
+{
+  "name": "socialmediabyazizullo",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000s\u0000o\u0000c\u0000i\u0000a\u0000l\u0000_\u0000m\u0000e\u0000d\u0000i\u0000a\u0000_\u0000a\u0000z\u0000i\u0000z\u0000u\u0000l\u0000l\u0000o\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/azizullo2003/social_media_azizullo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2",
+    "mongoose": "^8.3.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^3.1.0"
+  }
+}
