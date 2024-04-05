@@ -15,6 +15,7 @@ module.exports.addPost = async (req, res) => {
       text: text,
       imageUrl: imageUrl,
       videoUrl: videoUrl,
+      addedAt: Date.now(),
     });
     newPost.save();
     return res.status(201).json({ message: "Post created!" });
@@ -38,6 +39,7 @@ module.exports.editPost = async (req, res) => {
     existingPost.text = newText;
     existingPost.imageUrl = newImageUrl;
     existingPost.videoUrl = newVideoUrl;
+    existingPost.editedAt = Date.now();
     existingPost.save();
     return res.status(301).json({ message: "Post edited!" });
   } catch (error) {
@@ -47,8 +49,13 @@ module.exports.editPost = async (req, res) => {
 };
 
 module.exports.getAllPosts = async (req, res) => {
-  const posts = await Posts.find();
-  return res.status(200).json(posts);
+  try {
+    const posts = await Posts.find();
+    return res.status(200).json(posts);
+  } catch (error) {
+    console.error("Error getting posts:", error);
+    res.status(500).json({ message: "Something went wrong" });
+  }
 };
 
 module.exports.deletePost = async (req, res) => {

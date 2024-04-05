@@ -2,19 +2,21 @@ const express = require("express");
 let app = express();
 const port = 3001;
 var bodyParser = require("body-parser");
-const cors = require('cors');
+const cors = require("cors");
+const dotenv = require("dotenv");
+const notification_controller = require("./controllers/notification_controller.js");
 
-
-app.use(cors({
-  origin: '*' // Allow all origins (not recommended)
-}));
+app.use(
+  cors({
+    origin: "*", // Allow all origins (not recommended)
+  })
+);
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
-
 
 const connect_database = require("./utils/db_connect.js");
 const { upload } = require("./utils/upload.js");
@@ -26,6 +28,21 @@ const comment_controller = require("./controllers/comment_controller.js");
 const media_file_controller = require("./controllers/media_files_controller.js");
 
 connect_database();
+
+//Notification
+const server = app.listen(3002, () => {
+  console.log("Listening on port: " + 3002);
+});
+const corsOptions = {
+  origin: "*",
+  credentials: true,
+  optionSuccessStatus: 200,
+};
+const io = require("socket.io")(server, {
+  cors: corsOptions,
+});
+
+notification_controller.handleChatConnection(io);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -56,7 +73,7 @@ app.post(
 app.post(
   "/upload_video",
   upload.single("video"),
-  media_file_controller.uplaodVideo
+  media_file_controller.uploadVideo
 );
 
 app.get("/uploads/:file_name", media_file_controller.getFile);

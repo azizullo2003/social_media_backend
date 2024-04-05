@@ -1,14 +1,11 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 
-const connectionString =
-  "mongodb+srv://azizullo:fsBXTqjkzyMB73P3@cluster0.tdhhdrc.mongodb.net/social_media?retryWrites=true&w=majority";
+const connectionString = process.env.DB_STRING;
 
 const connectToDatabase = async () => {
   try {
-    await mongoose.connect(connectionString, {
-      // useNewUrlParser: true,
-      // useUnifiedTopology: true,
-    });
+    await mongoose.connect(connectionString);
     console.log("Connected to MongoDB");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);

@@ -1,5 +1,5 @@
 const path = require("path");
-const port = 3000;
+const port = 3001;
 
 module.exports.getFile = async (req, res) => {
   const imageName = req.params.file_name;
@@ -13,16 +13,16 @@ module.exports.uploadImage = async (req, res) => {
     return;
   }
   res.status(200).send({
-    imageUrl: "localhost:" + port + "/uploads/" + req.file.originalname,
+    imageUrl: "http://localhost:" + port + "/uploads/" + req.file.originalname,
   });
 };
 
-module.exports.uplaodVideo = async (req, res) => {
+module.exports.uploadVideo = async (req, res) => {
   if (!req.file) {
     res.status(400).send("No file uploaded.");
     return;
   }
   res.status(200).send({
-    videoUrl: "localhost:" + port + "/uploads/" + req.file.originalname,
+    videoUrl: "http://localhost:" + port + "/uploads/" + req.file.originalname,
   });
 };
