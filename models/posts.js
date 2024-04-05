@@ -14,6 +14,7 @@ const postsSchema = new mongoose.Schema({
   ],
   editedAt: Date,
   addedAt: Date,
+  views: Number,
 });
 
 module.exports = mongoose.model("Posts", postsSchema);

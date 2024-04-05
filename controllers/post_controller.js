@@ -15,6 +15,7 @@ module.exports.addPost = async (req, res) => {
       text: text,
       imageUrl: imageUrl,
       videoUrl: videoUrl,
+      views: 0,
       addedAt: Date.now(),
     });
     newPost.save();
@@ -51,6 +52,19 @@ module.exports.editPost = async (req, res) => {
 module.exports.getAllPosts = async (req, res) => {
   try {
     const posts = await Posts.find();
+
+    // Increment views for each post and handle NaN case
+    for (let i = 0; i < posts.length; i++) {
+      if (isNaN(posts[i].views)) {
+        posts[i].views = 0;
+      } else {
+        posts[i].views += 1;
+      }
+    }
+
+    // Save all updated posts
+    await Promise.all(posts.map((post) => post.save()));
+
     return res.status(200).json(posts);
   } catch (error) {
     console.error("Error getting posts:", error);
