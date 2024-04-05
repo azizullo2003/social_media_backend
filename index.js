@@ -1,13 +1,20 @@
 const express = require("express");
 let app = express();
-const port = 3000;
+const port = 3001;
 var bodyParser = require("body-parser");
+const cors = require('cors');
+
+
+app.use(cors({
+  origin: '*' // Allow all origins (not recommended)
+}));
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
+
 
 const connect_database = require("./utils/db_connect.js");
 const { upload } = require("./utils/upload.js");
